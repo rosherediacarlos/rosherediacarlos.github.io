@@ -1,18 +1,37 @@
-let anniversary = "2022-10-13";
+let anniversary = "2024-08-01";
 let date = new Date(anniversary);
-let dateVal = date.getTime();
 let today = new Date();
-let now = today.getTime();
-let value = now - dateVal;
-let day = Math.floor(value / (1000 * 60 * 60 * 24));
-let month = Math.floor(value / (1000 * 60 * 60 * 24 * 30.4375));
-let year = Math.floor(value / (1000 * 60 * 60 * 24 * 365.25));
+
+// Calcular la diferencia en milisegundos
+let value = today.getTime() - date.getTime();
+
+// Diferencia en años
+let yearsDiff = today.getFullYear() - date.getFullYear();
+
+// Diferencia en meses
+let monthsDiff = today.getMonth() - date.getMonth();
+
+// Diferencia en días
+let daysDiff = today.getDate() - date.getDate();
+
+// Ajustar si el día actual es menor que el del aniversario en el mismo mes
+if (daysDiff < 0) {
+    monthsDiff--;  // Reducir el mes si no hemos alcanzado el día del mes
+    let lastMonth = new Date(today.getFullYear(), today.getMonth(), 0);  // Último día del mes anterior
+    daysDiff += lastMonth.getDate();  // Ajustar el total de días
+}
+
+// Ajustar si el mes actual es menor que el del aniversario
+if (monthsDiff < 0) {
+    yearsDiff--;  // Reducir el año si no hemos alcanzado el mes del aniversario
+    monthsDiff += 12;  // Ajustar el total de meses
+}
 
 console.log(value);
 
-document.getElementById("days").textContent = day.toString();
-document.getElementById("months").textContent = month.toString();
-document.getElementById("years").textContent = year.toString();
+document.getElementById("days").textContent = daysDiff.toString();
+document.getElementById("months").textContent = monthsDiff.toString();
+document.getElementById("years").textContent = yearsDiff.toString();
 
 
 let musicPlayer = document.querySelector(".music-container");
@@ -60,24 +79,34 @@ let soundBarsLottie = bodymovin.loadAnimation({
 
 let trackList = [
     {
-        name: "Only",
-        artist: "Lee Hi",
-        path: "./music/only.mp3",
+        name: "Coincidir",
+        artist: "Macaco",
+        path: "./music/macaco_coincidir.mp3",
     },
     {
-        name: "Day & Night",
-        artist: "Jung Seung Hwan",
-        path: "./music/day and night.mp3",
+        name: "Ruido",
+        artist: "Amaral",
+        path: "./music/amaral_ruido.mp3",
     },
     {
-        name: "Love of my Life",
-        artist: "Reyne",
-        path: "./music/love of my life.mp3",
+        name: "Ella",
+        artist: "Enanitos Verdes",
+        path: "./music/ella_enanitos_verdes.mp3",
     },
     {
-        name: "The Only One",
-        artist: "Reyne",
-        path: "./music/the only one.mp3",
+        name: "Conexion",
+        artist: "Macaco",
+        path: "./music/macaco_conexion.mp3",
+    },
+    {
+        name: "Cuenta hasta 3",
+        artist: "Menny flores",
+        path: "./music/menny_flores_cuenta_hasta_tres.mp3",
+    },
+    {
+        name: "Kilometros",
+        artist: "Sin bandera",
+        path: "./music/sin_bandera_kilometros.mp3",
     },
 ];
 
@@ -105,6 +134,8 @@ function playPauseTrack(){
 }
 
 function playTrack(){
+    audioElement = document.getElementById("backgroundAudio");
+    audioElement.volume = 0.8;
     currentTrack.play();
     isPlaying = true;
     playPauseBtn.innerHTML = '<img class="w-8" src="icons/pause.svg">';
