@@ -135,7 +135,7 @@ function playPauseTrack(){
 
 function playTrack(){
     audioElement = document.getElementById("backgroundAudio");
-    audioElement.volume = 0.8;
+    
     currentTrack.play();
     isPlaying = true;
     playPauseBtn.innerHTML = '<img class="w-8" src="icons/pause.svg">';
